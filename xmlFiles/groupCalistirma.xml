@@ -1,0 +1,19 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+<suite name="group calistirma">
+    <test name="group calistirma 1">
+        <groups>
+            <!-- eğer test methodlarını belirlediğiniz gruplara göre çalıştırmak
+            isterseniz. tum test methodlarına grup bilgisi atamalısınız
+             gruplara atamada 2 bilgiye ihtiyacımız var;
+             1- hangi package veya classlardan methodlar calışacak
+             2- hangi gruptaki testler çalışacak -->
+            <run>
+                <include name="regression"></include>
+                <exclude name="smoke"></exclude>
+            </run>
+        </groups>
+        <packages>
+            <package name="tests.day16_pageObjectModel"></package>
+        </packages>
+    </test>
+</suite>
