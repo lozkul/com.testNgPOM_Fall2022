@@ -39,7 +39,7 @@ public class C01_DependsOnMethods extends TestBaseClass {
     public void nutellaTesti(){
         WebElement aramaKutusu= driver.findElement(By.id("twotabsearchtextbox"));
         aramaKutusu.sendKeys("Nutella" + Keys.ENTER);
-        WebElement sonucYaziElementi = driver.findElement(By.xpath("//div[@class=‘a-section a-spacing-small a-spacing-top-small’]"));
+        WebElement sonucYaziElementi = driver.findElement(By.xpath("//div[@class='a-section a-spacing-small a-spacing-top-small']"));
         String expectedKelime="Nutella";
         String actualSonucYazisi=sonucYaziElementi.getText();
         Assert.assertTrue(actualSonucYazisi.contains(expectedKelime));
@@ -49,7 +49,7 @@ public class C01_DependsOnMethods extends TestBaseClass {
     @Test(priority = 12,dependsOnMethods = "nutellaTesti")
     public void aramaSonucTesti(){
 
-        WebElement sonucYaziElementi = driver.findElement(By.xpath("//div[@class=‘a-section a-spacing-small a-spacing-top-small’]"));
+        WebElement sonucYaziElementi = driver.findElement(By.xpath("//div[@class='a-section a-spacing-small a-spacing-top-small']"));
         String actualSonucYazisi=sonucYaziElementi.getText();
         int indexOf = actualSonucYazisi.indexOf("of");
         int indexresults= actualSonucYazisi.indexOf("result");

@@ -5,49 +5,43 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.AmazonPage;
 import utilities.Driver;
+import utilities.ReusableMethods;
 
 public class C04_PagesKullanimi {
-    //amazon anasayfaya gidin
-    //3 test metodu oluşturun
-    //Nutella, Java, Bicycle için arama yapın
-    //sonuçların arama yaptığımız kelimeleri içerip içermediğini test edin
+    // Amazon anasayfaya gidin
+    // 3 test method'u olusturun
+    // Herbir method'da Nutella, Java, Bicycle icin arama yapip,
+    // sonuclarin arama yaptigimiz kelimeleri icerdigini test edin
+    AmazonPage amazonPage=new AmazonPage();
+    @Test(dependsOnMethods = "bicycleTesti")
+    public void nutellaTesti(){
+        amazonPage.aramaKutusu.clear();
+        amazonPage.aramaKutusu.sendKeys("nutella"+Keys.ENTER);
+        String actualAramaSonucu= amazonPage.aramaSonucElementi.getText();
+        String expectedKelime="nutella";
+        Assert.assertTrue(actualAramaSonucu.contains(expectedKelime));
 
-    AmazonPage amazonPage = new AmazonPage();
 
-    @Test
-    public void test01() {
+        ReusableMethods.bekle(5);
+        Driver.closeDriver();
+    }
+
+    @Test(dependsOnMethods = "bicycleTesti",groups = "smoke")
+    public void javaTesti(){
+        amazonPage.aramaKutusu.clear();
+        amazonPage.aramaKutusu.sendKeys("java"+Keys.ENTER);
+        String actualAramaSonucu= amazonPage.aramaSonucElementi.getText();
+        String expectedKelime="java";
+        Assert.assertTrue(actualAramaSonucu.contains(expectedKelime));
+    }
+
+    @Test(groups = "smoke")
+    public void bicycleTesti(){
         Driver.getDriver().get("https://www.amazon.com");
-
-
-        amazonPage.aramaKutusu.sendKeys("Nutella" + Keys.ENTER);
-        String actualSonucYazisi = amazonPage.aramaSonucElementi.getText();
-        String expectedKelime = "Nutella";
-
-        Assert.assertTrue(actualSonucYazisi.contains(expectedKelime));
-
-    }
-
-    @Test(dependsOnMethods = "test01")
-    public void test02() {
-
-        amazonPage.aramaKutusu.clear();
-        amazonPage.aramaKutusu.sendKeys("Java" + Keys.ENTER);
-        String actualSonucYazisi = amazonPage.aramaSonucElementi.getText();
-        String expectedKelime = "Java";
-
-        Assert.assertTrue(actualSonucYazisi.contains(expectedKelime));
-    }
-
-    @Test(dependsOnMethods = "test02")
-    public void test03() {
-
-        amazonPage.aramaKutusu.clear();
-        amazonPage.aramaKutusu.sendKeys("Bicycle" + Keys.ENTER);
-        String actualSonucYazisi = amazonPage.aramaSonucElementi.getText();
-        String expectedKelime = "Bicycle";
-
-        Assert.assertTrue(actualSonucYazisi.contains(expectedKelime));
-
+        amazonPage.aramaKutusu.sendKeys("bicycle"+ Keys.ENTER);
+        String actualAramaSonucu= amazonPage.aramaSonucElementi.getText();
+        String expectedKelime="bicycle";
+        Assert.assertTrue(actualAramaSonucu.contains(expectedKelime));
         Driver.closeDriver();
     }
 }
