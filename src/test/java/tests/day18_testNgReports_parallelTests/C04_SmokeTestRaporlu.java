@@ -1,5 +1,6 @@
 package tests.day18_testNgReports_parallelTests;
-
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.ExtentTest;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -10,69 +11,65 @@ import utilities.ConfigReader;
 import utilities.Driver;
 import utilities.ReusableMethods;
 import utilities.TestBaseRapor;
-
 public class C04_SmokeTestRaporlu extends TestBaseRapor {
-
-
-
-
     MyCoursedemyPage myCoursedemyPage=new MyCoursedemyPage();
-
-    @BeforeMethod
-    public void setup(){
-        Driver.getDriver().get(ConfigReader.getProperty("myUrl"));
-        ReusableMethods.bekle(3);
-
-    }
+    // uc farkli test method'u ile yanlis bilgilerle giris yapilamadigini test edin
     @Test
     public void yanlisKullaniciTesti(){
-        myCoursedemyPage.cookies.click();
+        // Mycoursedemy anasayfasina gidin
+        Driver.getDriver().get(ConfigReader.getProperty("myUrl"));
+        // login linkine basin
         myCoursedemyPage.loginLinki.click();
-        extentTest=extentReports.createTest("yanlis kullaici adi", "yanlis kullaici adi ile giriş yapılamaz");
+        extentTest=extentReports.createTest("yanlis kullanici adi","yanlis kullanici adi ile giris yapilamaz");
+        // 1- yanlis kullanici adi, gecerli password
         myCoursedemyPage.emailKutusu.sendKeys(ConfigReader.getProperty("myYanlisEmail"));
-        extentTest.info("kullanıcı adı olarak yanlış email yazıldı");
+        extentTest.info("kullanici adi olarak yanlis email yazildi");
         myCoursedemyPage.passwordKutusu.sendKeys(ConfigReader.getProperty("myGecerliPassword"));
-        extentTest.info("password olarak geçerli password yazıldı");
+        extentTest.info("Password olarak gecerli password yazildi");
+        // Login butonuna basarak login olmaya calisin
         myCoursedemyPage.loginButonu.click();
-        extentTest.info("login butonuna basıldı");
+        extentTest.info("Login butonuna basildi");
+        // Basarili olarak giris yapilamadigini test edin
+        // bunun icin hala login linklinin gorunur oldugunu test edelim
         Assert.assertTrue(myCoursedemyPage.loginLinki.isEnabled());
-        extentTest.pass("giriş yapılamadığı test edildi");
+        extentTest.pass("Giris yapilamadigi test edildi");
     }
     @Test
     public void yanlisPasswordTesti(){
-        myCoursedemyPage.cookies.click();
+        // Mycoursedemy anasayfasina gidin
+        Driver.getDriver().get(ConfigReader.getProperty("myUrl"));
+        // login linkine basin
         myCoursedemyPage.loginLinki.click();
-        extentTest=extentReports.createTest("yanlis password", "yanlis password ile giriş yapılamaz");
+        extentTest=extentReports.createTest("yanlis password","yanlis password ile giris yapilamaz");
+        // 2- gecerli kullanici adi, yanlis password
         myCoursedemyPage.emailKutusu.sendKeys(ConfigReader.getProperty("myGecerliEmail"));
-        extentTest.info("kullanıcı adı olarak geçerli email yazıldı");
+        extentTest.info("kullanici adi olarak gecerli email yazildi");
         myCoursedemyPage.passwordKutusu.sendKeys(ConfigReader.getProperty("myYanlisPassword"));
-        extentTest.info("password olarak yanlış password yazıldı");
+        extentTest.info("Password olarak yanlis password yazildi");
+        // Login butonuna basarak login olmaya calisin
         myCoursedemyPage.loginButonu.click();
-        extentTest.info("login butonuna basıldı");
+        extentTest.info("Login butonuna basildi");
+        // Basarili olarak giris yapilamadigini test edin
         Assert.assertTrue(myCoursedemyPage.loginLinki.isEnabled());
-        extentTest.pass("giriş yapılamadığı test edildi");
+        extentTest.pass("Giris yapilamadigi test edildi");
     }
-    @Test(priority = 3)
-    public void yanlisEmailVePasswordTesti(){
-        myCoursedemyPage.cookies.click();
+    @Test
+    public void yanlisEmailSifreTesti(){
+        // Mycoursedemy anasayfasina gidin
+        Driver.getDriver().get(ConfigReader.getProperty("myUrl"));
+        // login linkine basin
         myCoursedemyPage.loginLinki.click();
-        extentTest=extentReports.createTest("yanlis email ve password", "yanlis email ve password ile giriş yapılamaz");
+        extentTest=extentReports.createTest("yanlis kullanici adi ve password","yanlis kullanici adi ve yanlis password ile giris yapilamaz");
+        // 3- yanlis kullanici adi, yanlis password
         myCoursedemyPage.emailKutusu.sendKeys(ConfigReader.getProperty("myYanlisEmail"));
-        extentTest.info("kullanıcı adı olarak yanlış email yazıldı");
+        extentTest.info("kullanici adi olarak yanlis email yazildi");
         myCoursedemyPage.passwordKutusu.sendKeys(ConfigReader.getProperty("myYanlisPassword"));
-        extentTest.info("password olarak yanlış password yazıldı");
+        extentTest.info("Password olarak yanlis password yazildi");
+        // Login butonuna basarak login olmaya calisin
         myCoursedemyPage.loginButonu.click();
-        extentTest.info("login butonuna basıldı");
+        extentTest.info("Login butonuna basildi");
+        // Basarili olarak giris yapilamadigini test edin
         Assert.assertTrue(myCoursedemyPage.loginLinki.isEnabled());
-        extentTest.pass("giriş yapılamadığı test edildi");
+        extentTest.pass("Giris yapilamadigi test edildi");
     }
-
-    @AfterClass
-    public void teardown(){
-        Driver.closeDriver();
-    }
-
-
-
-
 }
